@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  config-server:
+    build: ./config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - spring-cloud
+
+  eureka-server:
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - spring-cloud
+    depends_on:
+      - config-server
+
+  comment-service:
+    build: ./comment-service
+    ports:
+      - "8481:8081"
+    networks:
+      - spring-cloud
+    depends_on:
+      - eureka-server
+      - config-server
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "8082:8082"
+    networks:
+      - spring-cloud
+    depends_on:
+      - eureka-server
+      - config-server
+
+networks:
+  spring-cloud:
