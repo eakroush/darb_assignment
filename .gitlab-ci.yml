@@ -17,3 +17,4 @@ deploy:
   stage: deploy
   script:
     - docker-compose up --build -d
+
